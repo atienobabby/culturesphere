@@ -10,19 +10,17 @@ logger = logging.getLogger(__name__)
 # Base URL for the Qloo Hackathon API (confirmed by Qloo)
 QLOO_BASE_URL = "https://hackathon.api.qloo.com"
 
-# Mapping for Qloo domains to their respective filter types for insights
-# and search types for entity lookup.
-# Sample_entity_id values will become less critical as dynamic search works.
+
 QLOO_DOMAIN_MAPPING = {
-    "music": {"insight_filter_type": "urn:entity:artist", "search_type": "urn:entity:artist", "sample_entity_id": "4BBEF799-A0C4-4110-AB01-39216993C312"}, # Taylor Swift ID
-    "movies": {"insight_filter_type": "urn:entity:movie", "search_type": "urn:entity:movie", "sample_entity_id": "5512B5DE-927A-412E-9941-6923C46B18D8"}, # Placeholder
-    "books": {"insight_filter_type": "urn:entity:book", "search_type": "urn:entity:book", "sample_entity_id": "5D6F2C2B-0F8B-4D8A-A0A5-4E7F8C4D7E2B"}, # Placeholder
-    "dining": {"insight_filter_type": "urn:entity:place", "search_type": "urn:entity:place", "sample_entity_id": "9B2F1F8E-3C4A-4E7C-9F8A-2C7E9D4B5C6A"}, # Placeholder
-    "travel": {"insight_filter_type": "urn:entity:destination", "search_type": "urn:entity:destination", "sample_entity_id": "6C9A0A7D-B2C3-4E1F-8D5E-7A6B8C9D0E1F"}, # Placeholder
-    "fashion": {"insight_filter_type": "urn:entity:brand", "search_type": "urn:entity:brand", "sample_entity_id": "8A1B2C3D-4E5F-6A7B-8C9D-0E1F2A3B4C5D"}, # Placeholder
-    "wellness": {"insight_filter_type": "urn:entity:person", "search_type": "urn:entity:person", "sample_entity_id": "1D2E3F4A-5B6C-7D8E-9F0A-1B2C3D4E5F6A"}, # Placeholder
-    "learning": {"insight_filter_type": "urn:entity:book", "search_type": "urn:entity:book", "sample_entity_id": "7E8F9A0B-1C2D-3E4F-5A6B-7C8D9E0F1A2B"}, # Placeholder
-    "general": {"insight_filter_type": "urn:entity:tag", "search_type": "urn:entity:tag", "sample_entity_id": "C1D2E3F4-A5B6-C7D8-E9F0-A1B2C3D4E5F6"}, # Placeholder
+    "music": {"insight_filter_type": "urn:entity:artist", "search_type": "urn:entity:artist", "sample_entity_id": "4BBEF799-A0C4-4110-AB01-39216993C312"}, 
+    "movies": {"insight_filter_type": "urn:entity:movie", "search_type": "urn:entity:movie", "sample_entity_id": "5512B5DE-927A-412E-9941-6923C46B18D8"}, 
+    "books": {"insight_filter_type": "urn:entity:book", "search_type": "urn:entity:book", "sample_entity_id": "5D6F2C2B-0F8B-4D8A-A0A5-4E7F8C4D7E2B"},
+    "dining": {"insight_filter_type": "urn:entity:place", "search_type": "urn:entity:place", "sample_entity_id": "9B2F1F8E-3C4A-4E7C-9F8A-2C7E9D4B5C6A"}, 
+    "travel": {"insight_filter_type": "urn:entity:destination", "search_type": "urn:entity:destination", "sample_entity_id": "6C9A0A7D-B2C3-4E1F-8D5E-7A6B8C9D0E1F"}, 
+    "fashion": {"insight_filter_type": "urn:entity:brand", "search_type": "urn:entity:brand", "sample_entity_id": "8A1B2C3D-4E5F-6A7B-8C9D-0E1F2A3B4C5D"}, 
+    "wellness": {"insight_filter_type": "urn:entity:person", "search_type": "urn:entity:person", "sample_entity_id": "1D2E3F4A-5B6C-7D8E-9F0A-1B2C3D4E5F6A"}, 
+    "learning": {"insight_filter_type": "urn:entity:book", "search_type": "urn:entity:book", "sample_entity_id": "7E8F9A0B-1C2D-3E4F-5A6B-7C8D9E0F1A2B"}, 
+    "general": {"insight_filter_type": "urn:entity:tag", "search_type": "urn:entity:tag", "sample_entity_id": "C1D2E3F4-A5B6-C7D8-E9F0-A1B2C3D4E5F6"}, 
 }
 
 def _get_qloo_entity_id(query: str, search_type: str, qloo_api_key: str) -> str | None:
@@ -135,7 +133,7 @@ def get_user_tastes(user_input: str, domain: str, qloo_api_key: str) -> dict:
         )
         logger.info(status_message) 
 
-    # Fallback to sample ID only if NO entity was found via search AND a sample ID exists
+    
     if not target_entity_id and domain_map_info.get("sample_entity_id"):
         target_entity_id = domain_map_info["sample_entity_id"]
         status_message += " Falling back to sample ID for insights demo."
@@ -145,7 +143,7 @@ def get_user_tastes(user_input: str, domain: str, qloo_api_key: str) -> dict:
         logger.warning(status_message)
         return {"status_message": status_message, "qloo_recommendations": []}
 
-    # --- Step 2: Make /v2/insights API call using the obtained (or sample) entity ID ---
+    
     if target_entity_id and selected_insight_filter_type:
         insights_url = f"{QLOO_BASE_URL}/v2/insights"
         
@@ -164,8 +162,7 @@ def get_user_tastes(user_input: str, domain: str, qloo_api_key: str) -> dict:
             logger.info("Qloo /insights API (GET) call successful.")
             logger.debug(f"Qloo /insights API raw response: {json.dumps(qloo_insights_raw_data, indent=2)}")
 
-            # --- Extract specific recommendations from Qloo Insights Data ---
-            # CORRECTED: Iterate over qloo_insights_raw_data['results']['entities']
+            
             if qloo_insights_raw_data and qloo_insights_raw_data.get('results') and qloo_insights_raw_data['results'].get('entities'):
                 for entity_item in qloo_insights_raw_data['results']['entities']: # Changed variable name to entity_item for clarity
                     # Each 'entity_item' is now directly the entity dictionary
