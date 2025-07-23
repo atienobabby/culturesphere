@@ -1,0 +1,142 @@
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+// Add error handling for server startup
+process.on('uncaughtException', (error) => {
+  console.error('❌ Uncaught Exception:', error);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
+});
+
+// Middleware
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true
+}));
+app.use(express.json());
+
+// Initialize Gemini AI
+const genAI = process.env.GEMINI_API_KEY ? 
+  new GoogleGenerativeAI(process.env.GEMINI_API_KEY) : 
+  null;
+
+// Mock Qloo API response (since we need actual API keys)
+const mockQlooResponse = {
+  music: {
+    artists: ['Solange', 'FKA twigs', 'Sampha', 'James Blake'],
+    genres: ['Alternative R&B', 'Experimental Pop', 'Neo-Soul'],
+    mood: 'Contemplative and artistic'
+  },
+  dining: {
+    cuisines: ['Ethiopian', 'Korean', 'Japanese', 'Mediterranean'],
+    atmosphere: ['Intimate', 'Artistic', 'Cozy'],
+    price_range: 'Mid-range'
+  },
+  travel: {
+    destinations: ['Portland', 'Berlin', 'Tokyo', 'Lisbon'],
+    activities: ['Art galleries', 'Jazz clubs', 'Architecture tours'],
+    vibe: 'Creative and culturally rich'
+  },
+  fashion: {
+    brands: ['Sustainable local brands', 'Vintage finds', 'Minimalist designers'],
+    style: ['Afrofuturistic', 'Minimalist', 'Vintage-modern'],
+    colors: ['Earth tones', 'Monochrome', 'Bold accents']
+  },
+  learning: {
+    topics: ['Afrofuturism', 'Philosophy', 'Music theory', 'Cultural studies'],
+    formats: ['Podcasts', 'Documentaries', 'Books', 'Online courses'],
+    depth: 'Intermediate to advanced'
+  },
+  wellness: {
+    practices: ['Meditation', 'Nature walks', 'Creative journaling', 'Sound baths'],
+    focus: ['Mindfulness', 'Stress reduction', 'Creative expression'],
+    environment: 'Peaceful and inspiring'
+  }
+};
+
+// API Routes
+app.post('/api/recommendations', async (req, res) => {
+  try {
+    const { userInput, domain } = req.body;
+
+    if (!userInput || !domain) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Get mock taste data (in production, this would be actual Qloo API call)
+    const tasteData = mockQlooResponse[domain] || {};
+
+    let recommendations;
+
+    if (genAI) {
+      // Generate recommendations using Gemini
+      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+      
+      const prompt = `
+        You are a cultural intelligence AI that creates beautiful, personalized recommendations.
+        
+        User Input: "${userInput}"
+        Domain: ${domain}
+        Taste Profile: ${JSON.stringify(tasteData)}
+        
+        Based on the user's input and their taste profile, create a beautifully written, personalized recommendation that:
+        1. Acknowledges their cultural preferences and mood
+        2. Provides specific, actionable recommendations
+        3. Explains the cultural connections and why these fit their taste
+        4. Uses a warm, creative, and inspiring tone
+        5. Includes 3-5 specific recommendations with brief explanations
+        
+        Format your response as a cohesive, flowing narrative (not a list) that feels personal and insightful.
+        Make it feel like advice from a culturally savvy friend who truly understands their taste.
+      `;
+
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      recommendations = response.text();
+    } else {
+      // Fallback response when Gemini API key is not available
+      recommendations = `Based on your interest in "${userInput}" and your taste profile, here are some personalized ${domain} recommendations:
+
+Your cultural DNA suggests you appreciate authentic, thoughtful experiences that blend creativity with substance. For ${domain}, I'd recommend exploring ${JSON.stringify(tasteData).slice(0, 100)}...
+
+This is a demo response. To get full AI-powered recommendations, please add your GEMINI_API_KEY to the .env file.`;
+    }
+
+    res.json({ recommendations });
+  } catch (error) {
+    console.error('Error generating recommendations:', error);
+    res.status(500).json({ error: 'Failed to generate recommendations' });
+  }
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 CultureSphere AI Backend Server running on port ${PORT}`);
+  console.log(`📡 API endpoints available at http://localhost:${PORT}/api`);
+  console.log(`🔑 Gemini API: ${genAI ? '✅ Connected' : '❌ No API key found'}`);
+  console.log(`🌐 CORS enabled for: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
+});
+
+server.on('error', (error) => {
+  if (error.code === 'EADDRINUSE') {
+    console.error(`❌ Port ${PORT} is already in use. Please stop other processes or use a different port.`);
+  } else {
+    console.error('❌ Server error:', error);
+  }
+  process.exit(1);
+});
