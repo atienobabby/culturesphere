@@ -1,118 +1,98 @@
 # CultureSphere AI
+Discover what fits your soul – explore music, travel, fashion, wellness, dining, and learning based on your cultural DNA.
 
-A cultural intelligence platform that delivers personalized lifestyle recommendations across multiple domains using AI-powered taste analysis. Users can explore music, dining, travel, fashion, learning, and wellness recommendations without requiring authentication.
+<img width="1626" height="777" alt="Image" src="https://github.com/user-attachments/assets/b5965514-9d92-4ed2-9cfa-2fbd68b585f0" />
 
 ## 🌟 Overview
+CultureSphere AI is an innovative cultural intelligence platform designed to provide deeply personalized lifestyle recommendations across multiple domains. Unlike generic recommendation systems, CultureSphere AI leverages cutting-edge AI to understand your unique "cultural DNA," offering insights that feel like advice from a culturally savvy friend. Users can explore music, dining, travel, fashion, learning, and wellness recommendations without requiring authentication, making discovery effortless and intuitive.
 
-CultureSphere AI combines the power of **Qloo's Taste AI™** and **Google Gemini** to create deeply personalized cultural recommendations. Users input their preferences in natural language, and the system returns creative, narrative-driven insights that feel like advice from a culturally savvy friend.
+## ✨ How It Works
+CultureSphere AI combines the power of Qloo's Taste AI™ and Google Gemini to deliver its unique insights:
 
-### How It Works
+- **User Input**: You describe your tastes, mood, or preferences in natural language (e.g., `"upbeat music for studying"`, `"restaurants for a romantic evening"`).
 
-1. **User Input**: Users describe their tastes, mood, or preferences in any cultural domain
-2. **Taste Analysis**: Qloo's Taste AI™ API analyzes the input to identify cross-domain cultural affinities
-3. **AI Narrative**: Google Gemini processes the taste data and user context to generate personalized, creative recommendations
-4. **Cultural Insights**: Users receive beautifully written lifestyle guidance that connects their tastes across domains
+- **Taste Analysis (Qloo)**: Your input is sent to Qloo's Taste AI™ API. Qloo acts as a "taste expert," analyzing your preferences to identify deep cultural affinities and cross-domain connections.
+
+- **AI Narrative (Gemini)**: Qloo's refined taste data, combined with your original context, is then passed to Google Gemini AI. Gemini transforms this data into creative, well-written, and personalized lifestyle recommendations.
+
+- **Cultural Insights**: You receive beautifully articulated guidance that not only suggests new content but also explains why it fits your unique cultural profile.
 
 ## 🏗 Project Structure
 
-```
+```bash
 culturesphere-ai/
 ├── frontend/                 # React + TailwindCSS application
 │   ├── src/
 │   │   ├── components/      # Reusable UI components
-│   │   ├── pages/          # Domain-specific pages (Music, Travel, etc.)
-│   │   ├── contexts/       # React contexts (Theme management)
-│   │   └── utils/          # API utilities and helpers
-│   ├── public/             # Static assets
-│   └── package.json        # Frontend dependencies
+│   │   ├── pages/           # Domain-specific pages (Music, Travel, etc.)
+│   │   ├── contexts/        # React contexts (Theme management)
+│   │   └── utils/           # API utilities and helpers
+│   ├── public/              # Static assets
+│   └── package.json         # Frontend dependencies
 ├── backend/                 # Flask API server
-│   ├── app.py             # Main Flask application
-│   ├── services/          # API integration services
+│   ├── app.py               # Main Flask application
+│   ├── services/            # API integration services
 │   │   ├── qloo_service.py    # Qloo API integration
 │   │   └── gemini_service.py  # Google Gemini integration
-│   ├── utils/             # Backend utilities
-│   └── requirements.txt   # Python dependencies
-├── .env.example           # Environment variables template
-└── README.md             # This file
+│   ├── utils/               # Backend utilities
+│   └── requirements.txt     # Python dependencies
+├── .env.example             # Environment variables template
+├── package.json             # Root package.json for concurrent running
+└── README.md                # This file
 ```
 
 ## 🧠 API Integration
 
 ### Qloo's Taste AI™ API
-Qloo provides cultural intelligence by analyzing taste patterns across entertainment, lifestyle, and consumer domains. In CultureSphere AI, Qloo:
 
-- Processes user input to identify cultural affinities
-- Returns cross-domain recommendations (e.g., if you like certain music, what restaurants you might enjoy)
-- Provides taste profiles that inform personalized suggestions
-- Enables discovery of cultural connections across different lifestyle areas
+Qloo provides the core cultural intelligence by analyzing taste patterns across entertainment, lifestyle, and consumer domains.
+
+- Processes user input to identify nuanced cultural affinities.  
+- Returns cross-domain recommendations.  
+- Provides taste profiles that inform deeply personalized suggestions.  
+- Enables discovery of unexpected cultural connections.
 
 ### Google Gemini API
-Google's Gemini LLM transforms raw taste data into engaging, personalized narratives. Gemini:
 
-- Interprets user context and emotional state from their input
-- Combines Qloo's taste data with user preferences
-- Generates creative, well-written lifestyle recommendations
-- Provides cultural context and explanations for suggestions
-- Creates cohesive narratives that feel personal and insightful
+Google's Gemini LLM transforms Qloo's raw taste data into personalized narratives.
+
+- Interprets user context and emotional state.  
+- Generates creative, well-written lifestyle recommendations.  
+- Provides cultural context and explanations.
 
 ## 🔑 API Setup Instructions
 
 ### Getting Your Google Gemini API Key (Free Tier)
 
-1. **Visit Google AI Studio**
-   - Go to [https://makersuite.google.com/app/apikey](https://makersuite.google.com/app/apikey)
-   - Sign in with your Google account
+1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)  
+2. Sign in with your Google account  
+3. Click **Create API Key**  
+4. Copy your API key immediately  
 
-2. **Create API Key**
-   - Click "Create API Key"
-   - Select "Create API key in new project" or choose an existing project
-   - Copy your API key immediately (you won't be able to see it again)
+**Free Tier Limits:**
+- 60 requests per minute  
+- 1,500 requests per day  
 
-3. **Free Tier Limits**
-   - 60 requests per minute
-   - 1,500 requests per day
-   - No cost for usage within these limits
+> Store your key securely in `.env`. Never commit to Git.
 
-4. **Important Security Notes**
-   - Never commit your API key to version control
-   - Store it securely in your `.env` file
-   - Consider setting up API key restrictions in Google Cloud Console
+### Getting Access to Qloo’s API
 
-### Getting Access to Qloo's Taste AI™ API
+1. Visit [Qloo Developers](https://www.qloo.com/developers)  
+2. Review docs and request access  
+3. Submit your use case and wait for approval (1–2 weeks)  
 
-Qloo's API requires approval and is primarily available for commercial applications.
-
-1. **Visit Qloo's Developer Portal**
-   - Go to [https://www.qloo.com/developers](https://www.qloo.com/developers)
-   - Review their API documentation and use cases
-
-2. **Request Access**
-   - Fill out their partnership/access request form
-   - Describe your use case and application
-   - Provide details about expected usage volume
-   - Include information about your project and goals
-
-3. **Application Process**
-   - Qloo reviews applications manually
-   - Response time varies (typically 1-2 weeks)
-   - They may request additional information or a demo
-
-4. **Alternative for Development**
-   - For initial development and testing, you can use mock data
-   - The backend includes sample responses that mirror Qloo's API structure
-   - This allows you to build and test the application while waiting for API access
+**Alternative (Mock Data):**  
+If `QLOO_API_KEY` is not present, the backend uses mock responses from `qloo_service.py`.
 
 ## ⚙️ Environment Setup
 
-### Create `.env` File
+### 1. Create `.env` File
 
-Copy `.env.example` to `.env` and add your API keys:
-
-```bash
+```env
 # Google Gemini API Configuration
 GEMINI_API_KEY=your_gemini_api_key_here
 
-# Qloo Taste AI API Configuration  
+# Qloo Taste AI API Configuration
 QLOO_API_KEY=your_qloo_api_key_here
 QLOO_BASE_URL=https://api.qloo.com/v1
 
@@ -121,117 +101,123 @@ FLASK_ENV=development
 FLASK_DEBUG=True
 SECRET_KEY=your_secret_key_for_sessions
 
-# CORS Configuration (for local development)
-FRONTEND_URL=http://localhost:3000
+# CORS Configuration
+FRONTEND_URL=http://localhost:5173
 ```
 
-### Environment Variables Explained
+### 2. Install Dependencies
 
-- `GEMINI_API_KEY`: Your Google Gemini API key from Google AI Studio
-- `QLOO_API_KEY`: Your Qloo API key (once approved)
-- `QLOO_BASE_URL`: Qloo's API base URL
-- `FLASK_ENV`: Set to 'development' for local development
-- `FLASK_DEBUG`: Enable Flask debug mode for development
-- `SECRET_KEY`: Used for session management (generate a random string)
-- `FRONTEND_URL`: Frontend URL for CORS configuration
-
-## 🔧 Backend Setup & Run Instructions
-
-### Prerequisites
-- Node.js 16 or higher
-- npm package manager
-
-### Installation
-
-1. **Install Dependencies** (from project root)
-   ```bash
-   npm install
-   ```
-
-2. **Set Up Environment Variables**
-   - Ensure your `.env` file is in the project root with all required variables
-
-### Running the Backend
+#### Root Dependencies (for concurrently):
 
 ```bash
-# Option 1: Run backend only
-npm run server
-
-# Option 2: Run both frontend and backend concurrently (recommended)
-npm start
+npm install
 ```
 
-The Express server will start on `http://localhost:3001`
-
-### Backend API Endpoints
-
-- `POST /api/recommendations` - Generate recommendations for a domain
-- `GET /api/health` - Health check endpoint
-- `GET /api/domains` - List available cultural domains
-
-## 💻 Frontend Setup & Run Instructions
-
-### Prerequisites
-- Node.js 16 or higher
-- npm or yarn package manager
-
-### Installation
-
-1. **Install Dependencies** (from project root, if not already done)
-   ```bash
-   npm install
-   ```
-
-### Running the Frontend
+#### Frontend:
 
 ```bash
-# Development server
+cd frontend
+npm install
+cd ..
+```
+
+#### Backend:
+
+```bash
+cd backend
+pip install -r requirements.txt
+cd ..
+```
+
+## 🔧 Backend Setup & Run Instructions (Flask - Python)
+
+### Prerequisites
+
+- Python 3.8 or higher  
+- pip installed
+
+### Run the Backend
+
+#### Option 1: Backend only
+
+```bash
+cd backend
+python app.py
+```
+
+Access: http://localhost:5000
+
+#### Option 2: Run Full Stack
+
+See section **🚀 Full Application Testing**.
+
+## 🧠 Backend API Endpoints
+
+### `POST /api/recommendations`
+
+```json
+{
+  "userInput": "I love Solange and jazz music",
+  "domain": "music"
+}
+```
+
+### `GET /api/health`  
+Health check
+
+### `GET /api/domains`  
+Get available domains
+
+## 💻 Frontend Setup & Run Instructions (React)
+
+### Prerequisites
+
+- Node.js 16+  
+- npm
+
+### Run Frontend
+
+#### Option 1: Frontend only
+
+```bash
+cd frontend
 npm run dev
-
-# Or run both frontend and backend together
-npm start
 ```
 
-The React application will start on `http://localhost:3000`
+Open http://localhost:5173
+
+#### Option 2: Full Stack
+
+See **🚀 Full Application Testing**
 
 ### Frontend Build
 
 ```bash
-# Production build
+cd frontend
 npm run build
 ```
 
+Outputs to `dist/`.
+
 ## 🚀 Local Testing & Development
 
-### Full Application Testing
-
-1. **Start Both Servers** (recommended)
-   ```bash
-   npm start
-   ```
-   This will start both the Express backend (port 3001) and React frontend (port 5173) concurrently.
-
-2. **Or Start Servers Separately**
-   ```bash
-   # Terminal 1: Start backend
-   npm run server
-   
-   # Terminal 2: Start frontend
-   npm run dev
-   ```
-
-3. **Access the Application**
-   - Open `http://localhost:5173` in your browser
-   - Navigate to any domain page (Music, Travel, etc.)
-   - Enter a test input like: "I love jazz and minimalist design"
-   - Verify the recommendation generation works
-
-### API Testing
-
-You can test the backend API directly using curl or Postman:
+### Full Stack (Recommended)
 
 ```bash
-curl -X POST http://localhost:3001/api/recommendations \
+npm start
+```
+
+This starts:
+- Flask backend on `localhost:5000`
+- React frontend on `localhost:5173`
+
+Access app at http://localhost:5173  
+Test input: `"I love jazz and minimalist design"`
+
+### Test Backend via `curl`
+
+```bash
+curl -X POST http://localhost:5000/api/recommendations \
   -H "Content-Type: application/json" \
   -d '{
     "userInput": "I love Solange and jazz music",
@@ -239,91 +225,94 @@ curl -X POST http://localhost:3001/api/recommendations \
   }'
 ```
 
-### Development Tips
+## 🛠️ Development Tips
 
-1. **Mock Data**: The backend includes mock Qloo responses for development
-2. **Error Handling**: Check browser console and Node.js server logs for debugging
-3. **API Rate Limits**: Be mindful of Gemini's free tier limits during testing
-4. **CORS Issues**: Ensure `FRONTEND_URL` in `.env` matches your frontend URL
+- **Mock Data**: Active if `QLOO_API_KEY` is missing  
+- **Errors**: Check console and backend logs  
+- **Rate Limits**: Gemini has 1,500/day free  
+- **CORS**: Ensure `FRONTEND_URL` matches exactly
 
 ## 🌐 Deployment Options
 
-### Backend Deployment (Flask)
+### Backend (Flask)
 
-**Backend Deployment (Node.js/Express)**
+#### Render:
 
-**Render**:
-- Connect your GitHub repository
-- Set environment variables in Render dashboard
-- Use `npm run server` as the start command
+- Connect GitHub  
+- Set environment variables  
+- Start command:  
+  ```bash
+  gunicorn app:app
+  ```
 
-**Heroku**:
-- Create a `Procfile` with: `web: npm run server`
-- Set environment variables in Heroku dashboard
-- Deploy via Git or GitHub integration
+#### Heroku:
 
-### Frontend Deployment (React)
+- Add `Procfile` in `backend/`:
+  ```text
+  web: gunicorn app:app
+  ```
 
-**Vercel**:
-- Connect your GitHub repository
-- Set build command: `npm run build`
-- Set output directory: `dist`
-- Configure environment variables for API endpoints
+### Frontend (React)
 
-**Netlify**:
-- Drag and drop the `dist` folder after running `npm run build`
-- Or connect via GitHub for automatic deployments
-- Configure redirects for React Router
+#### Vercel:
 
-### Full-Stack Deployment
+- Auto-detects React  
+- Build: `npm run build`  
+- Output dir: `dist`  
 
-For a complete deployment, you'll need:
-1. Backend deployed to a service like Render or Heroku
-2. Frontend deployed to Vercel or Netlify
-3. Update frontend API URLs to point to your deployed backend
-4. Ensure CORS is configured for your production frontend URL
+#### Netlify:
+
+- Connect GitHub or upload `dist/`  
+- Handle React Router routing manually if needed
+
+### Full Stack Deployment Tips
+
+- Set backend CORS to allow frontend URL  
+- Update frontend API URLs to deployed backend
 
 ## 🔒 Security Considerations
 
-- Never commit API keys to version control
-- Use environment variables for all sensitive configuration
-- Implement rate limiting in production
-- Consider API key rotation policies
-- Monitor API usage to stay within limits
+- Never commit API keys  
+- Monitor usage  
+- Use `.env` and rotate keys as needed  
+- Use HTTPS and production-level Flask settings
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+1. Fork  
+2. Create a branch  
+3. Make changes  
+4. Test  
+5. Submit PR
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT License – see `LICENSE` file
 
 ## 🆘 Troubleshooting
 
-### Common Issues
+### Common Errors
 
-**"API Key not found" errors**:
-- Verify your `.env` file is in the correct location
-- Check that environment variables are properly set
-- Restart the Node.js server after changing `.env`
+**API Key not found**  
+- Ensure `.env` exists and is correct  
+- Restart dev servers
 
-**CORS errors**:
-- Ensure `FRONTEND_URL` in `.env` matches your frontend URL
-- Check that both frontend and backend are running
+**CORS issues**  
+- `FRONTEND_URL` must match running frontend URL exactly
 
-**Qloo API access**:
-- Remember that Qloo API requires approval
-- Use mock data for development while waiting for access
-- Contact Qloo support if your application is pending for extended periods
+**No Qloo access**  
+- Backend uses mock data automatically  
+- Contact Qloo for approval status
 
-**Gemini API rate limits**:
-- Monitor your usage in Google AI Studio
-- Implement request queuing if hitting rate limits
-- Consider upgrading to paid tier for higher limits
+**Gemini rate limits**  
+- Monitor in AI Studio  
+- Upgrade tier if needed
 
-For additional support, please open an issue in the GitHub repository.
+**Backend won’t start**  
+- Python not installed  
+- Try:  
+  ```bash
+  pip install -r backend/requirements.txt
+  ```
+
+For more help, open an issue in the GitHub repository.
